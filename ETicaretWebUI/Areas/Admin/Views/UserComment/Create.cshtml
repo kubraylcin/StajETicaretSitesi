@@ -1,0 +1,50 @@
+﻿@model UserCommentCreateDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Yorum Ekleme Sayfası</h3>
+
+                <form method="post" enctype="multipart/form-data">
+                    <label>Ad Soyad</label>
+                    <input type="text" class="form-control" asp-for="NameSurname" />
+                    <br />
+
+                    <label>Email</label>
+                    <input type="email" class="form-control" asp-for="Email" />
+                    <br />
+
+                    <label>Yorum Detayı</label>
+                    <textarea class="form-control" asp-for="CommentDetail" rows="4"></textarea>
+                    <br />
+
+                    <label>Puan (1-5)</label>
+                    <input type="number" min="1" max="5" class="form-control" asp-for="Rating" />
+                    <br />
+
+                    <label>Görsel Seç</label>
+                    <input type="file" class="form-control" asp-for="ImageFile" />
+                    <br />
+
+                    <label>Ürün ID</label>
+                    <input type="number" class="form-control" asp-for="ProductID" />
+                    <br />
+
+                    <label>Durum (Aktif mi?)</label>
+                    <input type="checkbox" asp-for="Status" /> Aktif
+                    <br />
+
+                    <button class="btn btn-success">Yorumu Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

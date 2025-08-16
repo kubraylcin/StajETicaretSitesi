@@ -1,0 +1,32 @@
+﻿@model ETicaretWebUI.Dtos.ProductDetailDtos.ProductDetailUpdateDto
+@{
+    ViewData["Title"] = "UpdateProductDetail";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Ürün Detay Güncelleme Sayfası</h3>
+
+                <form method="post">
+                    <input type="hidden" asp-for="ProductDetailID" /> <!-- ID gizli gönder -->
+                    <input type="hidden" asp-for="ProductID" /> <!-- ID gizli gönder -->
+
+                    <label>Ürün Açıklaması</label>
+                    <input type="text" class="form-control" asp-for="ProductDescription" />
+                    <br />
+
+                    <label>Ürün Bilgisi</label>
+                    <input type="text" class="form-control" asp-for="ProductInfo" />
+                    <br />
+
+                    <button class="btn btn-info">Ürün Detayı Güncelle</button>
+                    <a href="/Admin/ProductDetail/Index" class="btn btn-secondary">Geri Dön</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,67 @@
+﻿@model CreateCategoryDto
+@{
+    ViewData["Title"] = "CreateCategory";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Kategori Ekleme Sayfası</h3>
+
+                <form method="post" enctype="multipart/form-data">
+                    <label>Kategori Adı</label>
+                    <input type="text" class="form-control" asp-for="CategoryName" />
+                    <br />
+                    <label>Görsel Seç</label>
+                    <input type="file" class="form-control" asp-for="ImageFile" />
+                    <br />
+                    <button class="btn btn-success">Kategoriyi Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const categoryNameInput = document.querySelector("input[name='CategoryName']");
+
+            form.addEventListener("submit", function (e) {
+                const categoryName = categoryNameInput.value.trim();
+
+                if (categoryName === "") {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Kategori adı boş bırakılamaz!"
+                    });
+                    return;
+                }
+                if (!imageFile) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Lütfen bir görsel seçin!"
+                    });
+                    return;
+                }
+                if (/\d/.test(categoryName)) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Kategori adı sayı içeremez!"
+                    });
+                    return;
+                }
+            });
+        });
+    </script>
+}

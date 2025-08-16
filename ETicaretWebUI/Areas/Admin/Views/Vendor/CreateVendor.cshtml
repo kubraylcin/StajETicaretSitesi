@@ -1,0 +1,69 @@
+﻿@model VendorCreateDto
+@{
+    ViewData["Title"] = "CreateVendor";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Vendor Ekleme Sayfası</h3>
+
+                <form method="post" enctype="multipart/form-data">
+                    <label>Vendor Adı</label>
+                    <input type="text" class="form-control" asp-for="VendorName" />
+                    <br />
+                    <label>Görsel Seç</label>
+                    <input type="file" class="form-control" asp-for="ImageFile" />
+                    <br />
+                    <button class="btn btn-success">Vendor Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const vendorNameInput = document.querySelector("input[name='VendorName']");
+            const imageFileInput = document.querySelector("input[name='ImageFile']");
+
+            form.addEventListener("submit", function (e) {
+                const vendorName = vendorNameInput.value.trim();
+                const imageFile = imageFileInput.files[0];
+
+                if (vendorName === "") {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Vendor adı boş bırakılamaz!"
+                    });
+                    return;
+                }
+                if (!imageFile) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Lütfen bir görsel seçin!"
+                    });
+                    return;
+                }
+                if (/\d/.test(vendorName)) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Vendor adı sayı içeremez!"
+                    });
+                    return;
+                }
+            });
+        });
+    </script>
+}

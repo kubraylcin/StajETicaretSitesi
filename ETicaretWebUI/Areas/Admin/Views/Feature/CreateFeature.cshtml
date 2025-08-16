@@ -1,0 +1,77 @@
+﻿@model CreateFeatureDto
+@{
+    ViewData["Title"] = "CreateFeature";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Avantaj Ekleme Sayfası</h3>
+
+            <!-- Tek "Avantajı Ekle" butonu: Başlığın hemen altında, sağ üstte -->
+            <div class="d-flex justify-content-end mb-3">
+                <button type="submit" form="advForm" class="btn btn-success">Avantajı Ekle</button>
+            </div>
+
+            <!-- Avantaj ekleme formu -->
+            <form id="advForm" method="post">
+                <div class="form-group mb-3">
+                    <label for="title">Başlık</label>
+                    <input type="text" id="title" name="Title" class="form-control" placeholder="Avantaj Başlığı" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="icon">İkon (class adı)</label>
+                    <input type="text" id="icon" name="Icon" class="form-control" placeholder="Örnek: fa fa-truck" />
+                    <small class="form-text text-muted">Font Awesome gibi ikon sınıfı yazabilirsiniz.</small>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        async function validateForm() {
+            const title = document.getElementById('title').value.trim();
+            const icon = document.getElementById('icon').value.trim();
+
+            if (!title) {
+                await Swal.fire({
+                    icon: 'warning',
+                    title: 'Dikkat!',
+                    text: 'Lütfen Avantaj Başlığı alanını doldurun!',
+                    confirmButtonText: 'Tamam'
+                });
+                return false;
+            }
+
+            if (!icon) {
+                await Swal.fire({
+                    icon: 'warning',
+                    title: 'Dikkat!',
+                    text: 'Lütfen İkon alanını doldurun!',
+                    confirmButtonText: 'Tamam'
+                });
+                return false;
+            }
+
+            return true; // form gönderilsin
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('advForm');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                validateForm().then(isValid => {
+                    if (isValid) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+

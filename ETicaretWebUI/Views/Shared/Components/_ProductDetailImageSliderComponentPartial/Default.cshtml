@@ -1,0 +1,56 @@
+﻿@model ProductImageGetDto
+
+<div class="col-lg-5 h-auto mb-30">
+    <div id="product-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner bg-light text-center">
+
+            @* İlk resim (aktif item) *@
+            <div class="carousel-item active">
+                @if (!string.IsNullOrEmpty(Model?.Image1))
+                {
+                    <img src="@Model.Image1" alt="Image" class="img-fluid rounded"
+                         style="height: 400px; object-fit: contain;" />
+                }
+                else
+                {
+                    <img src="/images/default-product.png" alt="Default Image" class="img-fluid rounded"
+                         style="height: 400px; object-fit: contain;" />
+                }
+            </div>
+
+            @* İkinci resim *@
+            @if (!string.IsNullOrEmpty(Model?.Image2))
+            {
+                <div class="carousel-item">
+                    <img src="@Model.Image2" alt="Image" class="img-fluid rounded"
+                         style="height: 400px; object-fit: contain;" />
+                </div>
+            }
+
+            @* Üçüncü resim *@
+            @if (!string.IsNullOrEmpty(Model?.Image3))
+            {
+                <div class="carousel-item">
+                    <img src="@Model.Image3" alt="Image" class="img-fluid rounded"
+                         style="height: 400px; object-fit: contain;" />
+                </div>
+            }
+
+            @* Dördüncü resim *@
+            @if (!string.IsNullOrEmpty(Model?.Image4))
+            {
+                <div class="carousel-item">
+                    <img src="@Model.Image4" alt="Image" class="img-fluid rounded"
+                         style="height: 400px; object-fit: contain;" />
+                </div>
+            }
+
+        </div>
+        <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+            <i class="fa fa-2x fa-angle-left text-dark"></i>
+        </a>
+        <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+            <i class="fa fa-2x fa-angle-right text-dark"></i>
+        </a>
+    </div>
+</div>

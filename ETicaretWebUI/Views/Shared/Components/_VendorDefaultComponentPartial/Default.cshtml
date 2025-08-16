@@ -1,0 +1,29 @@
+﻿@model List<VendorResultDto>
+<div class="container-fluid py-5">
+    <h2 class="section-title text-center text-uppercase mx-xl-5 mb-4">
+        <span class="bg-secondary pr-3">İş Bırlıklerımız</span>
+    </h2>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel vendor-carousel">
+                @foreach(var item in Model)
+                {
+                    <div class="bg-light p-4">
+                        <img src="@item.ImagePath" alt="@item.VendorName">
+                    </div>
+                }
+                
+              
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .vendor-carousel .bg-light img {
+        max-width: 100px;
+        max-height: 100px;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+    }
+</style>

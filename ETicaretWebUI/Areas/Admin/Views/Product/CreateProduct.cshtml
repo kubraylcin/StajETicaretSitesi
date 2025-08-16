@@ -1,0 +1,72 @@
+﻿@model CreateProductDto
+@{
+    ViewData["Title"] = "CreateProduct";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Ürün Ekleme Sayfası</h3>
+
+
+                <form method="post">
+                    <label>Ürün Adı</label>
+                    <input type="text" class="form-control" asp-for="ProductName" />
+                    <br />
+                    <label>Ürün Fiyatı</label>
+                    <input type="text" class="form-control" asp-for="ProductPrice" />
+                    <br />
+                    <label for="imageurl">Ürün Görselini Giriniz</label>
+                    <input type="text" class="form-control" asp-for="ProductImageUrl" id="imageurl">
+                    <br />
+                    <label for="price">Ürün Kategorisini Seçiniz</label>
+                    @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.CategoryValues, new { @class = "form-control" })
+                    <br />
+                    <label>Ürün Açıklaması</label>
+                    <textarea class="form-control" asp-for="ProductDescription" rows="5"></textarea>
+                    <br />
+                    <button class="btn btn-success">Ürünü EKle</button>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const productPriceInput = document.querySelector("input[name='ProductPrice']");
+
+            form.addEventListener("submit", function (e) {
+                const price = productPriceInput.value.trim();
+
+                if (price === "") {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Ürün fiyatı boş bırakılamaz!"
+                    });
+                    return;
+                }
+
+                // Fiyatın geçerli pozitif sayı olup olmadığını kontrol et
+                if (isNaN(price) || Number(price) <= 0) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Ürün fiyatı geçerli bir sayı olmalı ve sıfırdan büyük olmalıdır!"
+                    });
+                    return;
+                }
+            });
+        });
+    </script>
+}

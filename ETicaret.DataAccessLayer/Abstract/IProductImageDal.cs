@@ -1,0 +1,15 @@
+﻿using ETicaretEntityLayer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ETicaret.DataAccessLayer.Abstract
+{
+    public interface IProductImageDal: IGenericDal<ProductImage>
+    {
+        Task<ProductImage>GetByProductIdProductImageAsync(int id);
+
+    }
+}

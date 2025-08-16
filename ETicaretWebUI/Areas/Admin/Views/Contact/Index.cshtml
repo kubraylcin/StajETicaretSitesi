@@ -1,0 +1,180 @@
+﻿@model List<ResultContactDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="content container-fluid">
+    <form method="post" id="antiForgeryForm">
+        @Html.AntiForgeryToken()
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Gelen İletişim Mesajları</h3>
+
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Admin">Admin</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">İletişim Mesajları</li>
+                    </ol>
+                </nav>
+
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-info">Gösterilecek iletişim mesajı yok.</div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th style="width:5%;">#</th>
+                                    <th style="width:15%;">Ad Soyad</th>
+                                    <th style="width:15%;">E-Posta</th>
+                                    <th style="width:15%;">Konu</th>
+                                    <th style="width:30%;">Mesaj</th>
+                                    <th style="width:7%;">Durum</th>
+                                    <th style="width:13%;">Gönderim Tarihi</th>
+                                    <th style="width:10%;">Eylemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var msg in Model)
+                                {
+                                    count++;
+                                    <tr class="@(msg.IsRead ? "" : "table-info")">
+                                        <td>@count</td>
+                                        <td class="text-start">@msg.NameSurname</td>
+                                        <td class="text-start">@msg.Email</td>
+                                        <td class="text-start">@msg.Subject</td>
+                                        <td class="text-start text-truncate" style="max-width: 350px;" title="@msg.Message">
+                                            @msg.Message
+                                        </td>
+                                        <td>
+                                            @if (msg.IsRead)
+                                            {
+                                                <span class="badge bg-success px-3 py-2">
+                                                    <i class="fas fa-check-circle me-1"></i> Okundu
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger px-3 py-2 text-white">
+                                                    <i class="fas fa-exclamation-circle me-1"></i> Okunmadı
+                                                </span>
+                                            }
+                                        </td>
+                                        <td>@msg.SendDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                        <td>
+                                            @if (!msg.IsRead)
+                                            {
+                                                <button type="button" class="btn btn-success btn-sm btn-mark-as-read" data-id="@msg.ContactId" title="Mesajı okundu olarak işaretle">
+                                                    <i class="fas fa-eye me-1"></i> Okundu Yap
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-warning btn-sm btn-mark-as-unread" data-id="@msg.ContactId" title="Mesajı okunmadı olarak işaretle">
+                                                    <i class="fas fa-eye-slash me-1"></i> Okunmadı Yap
+                                                </button>
+                                            }
+                                            
+                                            
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // AntiForgeryToken değerini al
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            // Okundu Yap butonları
+            const markAsReadButtons = document.querySelectorAll(".btn-mark-as-read");
+            markAsReadButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const contactId = this.getAttribute("data-id");
+                    Swal.fire({
+                        title: 'Mesajı Okundu Yap?',
+                        text: "Bu mesajı okundu olarak işaretlemek istediğinize emin misiniz?",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#28a745',
+                        cancelButtonColor: '#dc3545',
+                        confirmButtonText: 'Evet, Okundu Yap',
+                        cancelButtonText: 'Hayır, Vazgeç'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch(`/Admin/Contact/MarkAsRead/${contactId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'RequestVerificationToken': token,
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(response => {
+                                if (response.ok) {
+                                    Swal.fire('Başarılı', 'Mesaj okundu olarak işaretlendi.', 'success').then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire('Hata', 'Durum güncellenemedi.', 'error');
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            // Okunmadı Yap butonları
+            const markAsUnreadButtons = document.querySelectorAll(".btn-mark-as-unread");
+            markAsUnreadButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const contactId = this.getAttribute("data-id");
+                    Swal.fire({
+                        title: 'Mesajı Okunmadı Yap?',
+                        text: "Bu mesajı okunmadı olarak işaretlemek istediğinize emin misiniz?",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#ffc107',
+                        cancelButtonColor: '#dc3545',
+                        confirmButtonText: 'Evet, Okunmadı Yap',
+                        cancelButtonText: 'Hayır, Vazgeç'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch(`/Admin/Contact/MarkAsUnread/${contactId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'RequestVerificationToken': token,
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(response => {
+                                if (response.ok) {
+                                    Swal.fire('Başarılı', 'Mesaj okunmadı olarak işaretlendi.', 'success').then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire('Hata', 'Durum güncellenemedi.', 'error');
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

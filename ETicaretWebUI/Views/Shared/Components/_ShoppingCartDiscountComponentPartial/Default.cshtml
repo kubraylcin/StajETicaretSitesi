@@ -1,0 +1,24 @@
+﻿@model BasketTotalDto
+<div class="col-lg-4">
+   
+    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Sipariş Özeti</span></h5>
+    <div class="bg-light p-30 mb-5">
+        <div class="border-bottom pb-2">
+            <div class="d-flex justify-content-between mb-3">
+                <h6>Toplam Ürün Fiyati</h6>
+                <h6>@ViewBag.total ₺</h6>
+            </div>
+            <div class="d-flex justify-content-between">
+                <h6 class="font-weight-medium">KDV</h6>
+                <h6 class="font-weight-medium">@ViewBag.tax ₺ </h6>
+            </div>
+        </div>
+        <div class="pt-2">
+            <div class="d-flex justify-content-between mt-2">
+                <h5>Toplam Fiyat</h5>
+                <h5>@ViewBag.totalPriceWithVergi ₺</h5>
+            </div>
+            <a href="https://localhost:7247/Order/Index" class="btn btn-block btn-success font-weight-bold my-3 py-3">Ödeme Adımına Geç</a>
+        </div>
+    </div>
+</div>

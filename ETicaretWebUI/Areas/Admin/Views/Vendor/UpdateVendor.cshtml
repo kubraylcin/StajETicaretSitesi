@@ -1,0 +1,65 @@
+﻿@model VendorUpdateDto
+@{
+    ViewData["Title"] = "UpdateVendor";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Vendor Güncelleme Sayfası</h3>
+
+                <form asp-action="UpdateVendor" asp-controller="Vendor" asp-area="Admin" asp-route-id="@Model.VendorId" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="VendorId" /> <!-- Bunu ekle! -->
+
+                    <label>Vendor Adı</label>
+                    <input type="text" class="form-control" asp-for="VendorName" />
+                    <br />
+
+                    <label>Yeni Görsel (İsteğe Bağlı)</label>
+                    <input type="file" class="form-control" asp-for="ImageFile" />
+                    <br />
+
+                    <button class="btn btn-success">Vendor'u Güncelle</button>
+                    <a href="/Admin/Vendor/Index" class="btn btn-secondary">Geri Dön</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const vendorNameInput = document.querySelector("input[name='VendorName']");
+
+            form.addEventListener("submit", function (e) {
+                const vendorName = vendorNameInput.value.trim();
+
+                if (vendorName === "") {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Vendor adı boş bırakılamaz!"
+                    });
+                    return;
+                }
+
+                if (/\d/.test(vendorName)) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Hata!",
+                        text: "Vendor adı sayı içeremez!"
+                    });
+                    return;
+                }
+            });
+        });
+    </script>
+}
+

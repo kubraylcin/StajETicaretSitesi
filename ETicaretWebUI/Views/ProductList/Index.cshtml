@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/_UILayout.cshtml";
+
+    int currentPage = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int categoryId = ViewBag.i ?? 0;
+}
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="/">Ana Sayfa</a>
+                <a class="breadcrumb-item text-dark" href="#">Ürünler</a>
+                <span class="breadcrumb-item active">Ürün Listesi</span>
+            </nav>
+        </div>
+    </div>
+
+    @* Ürün listesini kategori ID ve sayfa numarasına göre getir *@
+    <div class="row px-xl-5">
+        <div class="col-lg-12 col-md-8">
+            @await Component.InvokeAsync("_ProductListComponentPartial", new { id = categoryId, page = currentPage })
+        </div>
+    </div>
+
+    @* Dinamik Sayfalama *@
+    <div class="row px-xl-5 mt-4">
+        <div class="col-12">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { id = categoryId, page = currentPage - 1 })">Önceki</a>
+                    </li>
+
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { id = categoryId, page = i })">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { id = categoryId, page = currentPage + 1 })">Sonraki</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

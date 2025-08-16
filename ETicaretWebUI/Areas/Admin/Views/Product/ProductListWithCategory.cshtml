@@ -1,0 +1,51 @@
+﻿@model List<ResultProductWithCategoryDto>
+@{
+    ViewData["Title"] = "ProductListWithCategory";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Ürünler Listesi</h3>
+
+
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Ürün Adı</th>
+                            <th>Ürün Fiyatı</th>
+                            <th>Kategori Adı </th>
+                            <th>Sil</th>
+                            <th>Güncelle</th>
+                            <th>Ürün Görselleri</th>
+                            <th>Ürün Açıklamaları</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.ProductName</td>
+                                <td>@item.ProductPrice</td>
+                                <td>@item.CategoryName</td>
+                                <td><a href="/Admin/Product/DeleteProduct/@item.ProductId" class="btn btn-danger ">Sil</a></td>
+                                <td><a href="/Admin/Product/UpdateProduct/@item.ProductId" class="btn btn-success "> Güncelle </a></td>
+                                <td><a href="/Admin/ProductImage/ProductImageDetail/@item.ProductId" class="btn btn-info "> Ürün Görselleri </a></td>
+                                <td><a href="/Admin/ProductDetail/UpdateProductDetail/@item.ProductId" class="btn btn-warning"> Ürün Bilgileri </a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="mt-3">
+                    <a href="/Admin/Product/CreateProduct" class="btn btn-primary">Yeni Ürün Ekle </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

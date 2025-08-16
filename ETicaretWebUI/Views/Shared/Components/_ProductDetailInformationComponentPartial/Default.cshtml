@@ -1,0 +1,15 @@
+﻿@model ETicaretWebUI.Dtos.ProductDetailDtos.ProductDetailUpdateDto
+
+@if (!string.IsNullOrEmpty(Model?.ProductInfo))
+{
+    <ul>
+        @foreach (var item in Model.ProductInfo.Split('.', StringSplitOptions.RemoveEmptyEntries))
+        {
+            <li>@item.Trim()</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Ürün bilgisi bulunmamaktadır.</p>
+}

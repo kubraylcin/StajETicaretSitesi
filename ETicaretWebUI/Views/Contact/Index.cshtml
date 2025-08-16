@@ -1,0 +1,75 @@
+﻿@model CreateContactDto
+@{
+    ViewData["Title"] = "İletişim";
+    Layout = "~/Views/UILayout/_UILayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="#">Ana Sayfa</a>
+                <span class="breadcrumb-item active">İletişim</span>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+        <span class="bg-secondary pr-3">Bizimle İletişime Geçin</span>
+    </h2>
+    <div class="row px-xl-5">
+        <div class="col-lg-7 mb-5">
+            <div class="contact-form bg-light p-30">
+
+                @* Başarılı gönderim mesajı *@
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                <form method="post" asp-action="Index" asp-controller="Contact" novalidate>
+                    <div class="control-group mb-3">
+                        <input asp-for="NameSurname" class="form-control" placeholder="Adınız" />
+                        <span asp-validation-for="NameSurname" class="text-danger"></span>
+                    </div>
+                    <div class="control-group mb-3">
+                        <input asp-for="Email" type="email" class="form-control" placeholder="E-posta Adresiniz" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="control-group mb-3">
+                        <input asp-for="Subject" class="form-control" placeholder="Konu" />
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                    <div class="control-group mb-3">
+                        <textarea asp-for="Message" class="form-control" rows="8" placeholder="Mesajınız"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <button class="btn btn-success py-2 px-4" type="submit" id="sendMessageButton">
+                            Mesaj Gönder
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="col-lg-5 mb-5">
+            <div class="bg-light p-30 mb-30">
+                <iframe style="width: 100%; height: 250px;"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.044682865402!2d37.368158615094414!3d37.06616617990138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39371d7ca4dbb%3A0x8e82f60ff476dc7d!2sGaziantep%20B%C3%BCy%C3%BCk%C5%9Fehir%20Belediyesi!5e0!3m2!1str!2str!4v1689490453000!5m2!1str!2str"
+                        frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+            <div class="bg-light p-30 mb-3">
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-success mr-3"></i>Gaziantep Büyükşehir Belediyesi, Şehitkamil, Gaziantep</p>
+                <p class="mb-2"><i class="fa fa-envelope text-success mr-3"></i>info@gaziantep.bel.tr</p>
+                <p class="mb-2"><i class="fa fa-phone-alt text-success mr-3"></i>+90 342 123 45 67</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

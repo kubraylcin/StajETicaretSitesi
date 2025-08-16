@@ -1,0 +1,40 @@
+﻿@model ProductImageUpdateDto
+
+@{
+    ViewData["Title"] = "ProductImageDetail";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h3 class="mb-3">Ürün Görselleri Güncelleme Sayfası</h3>
+
+                <form method="post">
+                    <input type="hidden" asp-for="ProductImageID" />
+                    <input type="hidden" asp-for="ProductID" />
+                    <label>Görsel 1 </label>
+                    <input type="text" class="form-control" asp-for="Image1" />
+                    <br />
+
+                    <label>Görsel 2 </label>
+                    <input type="text" class="form-control" asp-for="Image2" />
+                    <br />
+
+                    <label>Görsel 3 </label>
+                    <input type="text" class="form-control" asp-for="Image3" />
+                    <br />
+
+                    <label>Görsel 4 </label>
+                    <input type="text" class="form-control" asp-for="Image4" />
+                    <br />
+
+                    <button type="submit" class="btn btn-success">Görselleri Güncelle</button>
+                    <a href="/Admin/ProductImage/Index" class="btn btn-secondary">Geri Dön</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

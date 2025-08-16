@@ -1,0 +1,51 @@
+﻿
+<div class="col-md-6">
+    <h4 class="mb-4">Değerlendirme Bırak</h4>
+    <small class="text-muted d-block mb-3">E-posta adresiniz yayınlanmayacaktır. Zorunlu alanlar * ile işaretlenmiştir.</small>
+
+    <form method="post" enctype="multipart/form-data" asp-controller="ProductList" asp-action="AddComment">
+        <input type="hidden" name="ProductID" value="@ViewBag.x" />
+        <div class="form-group">
+            <label for="rating">Puanınız *</label>
+            <select name="Rating" class="form-control w-auto mb-3" required>
+                <option value="" disabled selected>Puanınızı seçin</option>
+                <option value="5">★★★★★ - Mükemmel</option>
+                <option value="4">★★★★☆ - İyi</option>
+                <option value="3">★★★☆☆ - Ortalama</option>
+                <option value="2">★★☆☆☆ - Kötü</option>
+                <option value="1">★☆☆☆☆ - Çok Kötü</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="CommentDetail">Yorumunuz *</label>
+            <textarea name="CommentDetail" cols="30" rows="5" class="form-control" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="NameSurname">Adınız *</label>
+            <input type="text" class="form-control" name="NameSurname" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Email">E-posta Adresiniz *</label>
+            <input type="email" class="form-control" name="Email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="ImageFile">Profil Resmi (İsteğe Bağlı)</label>
+            <input type="file" class="form-control-file" name="ImageFile">
+        </div>
+
+        <div class="form-group mb-0">
+            <button type="submit" class="btn btn-success px-3">Değerlendirmeyi Gönder</button>
+        </div>
+    </form>
+</div>
+<style>
+    .text-warning i.fas.fa-star,
+    .text-warning i.fas.fa-star-half-alt,
+    .text-warning i.far.fa-star {
+        color: #28a745 !important; /* yeşil renk */
+    }
+</style>
